@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 
 const mysql = require('mysql2/promise');
+import fs from 'fs';
+import yaml from 'js-yaml'
 
-async function createDbAndTable(dbName, tableName) {
+
+async function createDbAndTable() {
   const connection = await mysql.createConnection({
-    host: '59.110.35.198',
-    user: 'root',
-    password: 'swqslwlROOT1',
+    host: config.host,
+    user: config.user,
+    password: config.password,
   });
 
-  await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\`;`);
-  await connection.query(`USE \`${dbName}\`;`);
+  await connection.query(`CREATE DATABASE IF NOT EXISTS \`${config.name}\`;`);
+  await connection.query(`USE \`${config.name}\`;`);
 
   const tableSchema = `
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -18,15 +21,14 @@ async function createDbAndTable(dbName, tableName) {
     password VARCHAR(255) NOT NULL
   `;
 
-  const createTableSQL = `CREATE TABLE IF NOT EXISTS \`${tableName}\` (${tableSchema});`;
+  const createTableSQL = `CREATE TABLE IF NOT EXISTS \`${config.table}\` (${tableSchema});`;
   await connection.query(createTableSQL);
 
-  console.log(`✅ 数据库 ${dbName} 的表 ${tableName} 创建成功！`);
+  console.log(`✅ 数据库 ${config.name} 的表 ${config.table} 创建成功！`);
   await connection.end();
 }
 
-const args = process.argv.slice(2);
-const dbName = args[0];
-const tableName = args[1];
+const fileContents = fs.readFileSync('C:/Users/22873/Desktop/config.yaml', 'utf8');
+const config = yaml.load(fileContents);
 
-createDbAndTable(dbName, tableName).catch(console.error);
+createDbAndTable().catch(console.error);
