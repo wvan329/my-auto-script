@@ -2,6 +2,7 @@
   "name": "my-auto-script",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "my-auto-db": "./createTable.js"
   },

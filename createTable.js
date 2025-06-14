@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const mysql = require('mysql2/promise');
+import mysql from 'mysql2/promise';
 import fs from 'fs';
 import yaml from 'js-yaml'
 
