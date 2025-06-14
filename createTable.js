@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import fs from 'fs';
 import yaml from 'js-yaml'
 import util from './util.js';
