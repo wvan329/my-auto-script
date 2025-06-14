@@ -1,0 +1,18 @@
+{
+  "name": "my-auto-script",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": {
+    "my-auto-db": "./createTable.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "mysql2": "^3.14.1"
+  }
+}
