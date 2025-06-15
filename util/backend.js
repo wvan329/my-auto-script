@@ -57,6 +57,15 @@ const backCode = async () => {
   replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 1, app.host);
   replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 2, app.password);
 
+  await axios.post(`https://api.github.com/user/repos`, {
+    name: name_port_back,
+    private: false,
+    auto_init: false
+  }, {
+    headers: { Authorization: `token ${app.githubToken}` }
+  });
+
+
   const { data: publicKey } = await axios.get(
     `https://api.github.com/repos/${githubOwner}/${name_port_back}/actions/secrets/public-key`,
     { headers: { Authorization: `token ${app.githubToken}` } }
@@ -73,14 +82,6 @@ const backCode = async () => {
       { headers: { Authorization: `token ${app.githubToken}` } }
     );
   };
-
-  await axios.post(`https://api.github.com/user/repos`, {
-    name: name_port_back,
-    private: false,
-    auto_init: false
-  }, {
-    headers: { Authorization: `token ${app.githubToken}` }
-  });
 
   await setGithubSecret('SERVER_HOST', app.host);
   await setGithubSecret('PASSWORD', app.password);

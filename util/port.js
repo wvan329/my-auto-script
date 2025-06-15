@@ -8,6 +8,7 @@ let name_port_back = '';
 let name_port_front = '';
 let backAppDir = '';
 let frontAppDir = '';
+const githubOwner = 'wvan329';
 
 const getPort = async () => {
   const ssh = new NodeSSH();
@@ -35,5 +36,5 @@ const getPort = async () => {
 };
 
 export {
-  getPort, port, name_port, name_port_back, name_port_front, backAppDir, frontAppDir
+  getPort, port, name_port, name_port_back, name_port_front, backAppDir, frontAppDir,githubOwner
 };
