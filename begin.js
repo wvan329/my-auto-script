@@ -5,17 +5,17 @@ import util from './util/index.js';
 //获取端口
 await util.getPort();
 
-//后端docker
+//准备后端docker容器
 await util.dockerBack();
 
 //创建rbac数据库表
 util.createDbAndTable();
 
-//后端仓库、代码
+//拉后端代码、建立GitHub仓库，配置CICD
 util.backCode();
 
-//前端docker
+//配置nginx-前端路由
 util.dockerFront();
 
-//前端仓库、代码
+//拉前端代码、建立GitHub仓库，配置CICD
 util.frontCode();

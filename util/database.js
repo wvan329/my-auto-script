@@ -14,7 +14,9 @@ const createDbAndTable = async () => {
 
   await connection.query(`CREATE DATABASE IF NOT EXISTS \`${name_port}\`;`);
   await connection.query(`USE \`${name_port}\`;`);
-  const script = fs.readFileSync(path.join(dirname, 'config/sql.txt'), 'utf8');
+  const script = fs.readFileSync('util/sql.txt', 'utf8');
+  console.log(script);
+  
   await connection.query(script);
   await connection.end();
 };
