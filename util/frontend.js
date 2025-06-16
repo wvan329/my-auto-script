@@ -48,7 +48,7 @@ const dockerFront = async () => {
 };
 
 const frontCode = async () => {
-  const zipUrl = `https://api.github.com/repos/${githubOwner}/my-project-front/zipball/main`;
+  const zipUrl = `https://api.github.com/repos/wvan329/my-project-front/zipball/main`;
   const zipPath = path.join(dirname, 'repo-f.zip');
   const tempDir = path.join(dirname, 'temp_download-f');
 

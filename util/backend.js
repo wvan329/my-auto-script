@@ -28,7 +28,7 @@ const dockerBack = async () => {
 };
 
 const backCode = async () => {
-  const zipUrl = `https://api.github.com/repos/${githubOwner}/my-project-back/zipball/main`;
+  const zipUrl = `https://api.github.com/repos/wvan329/my-project-back/zipball/main`;
   const zipPath = path.join(dirname, 'repo-b.zip');
   const tempDir = path.join(dirname, 'temp_download-b');
 
