@@ -1,7 +1,6 @@
 import mysql from 'mysql2/promise';
 import fs from 'fs-extra';
-import path from 'path';
-import { app, dirname } from './config.js';
+import { app } from './config.js';
 import { name_port } from './port.js';
 
 const createDbAndTable = async () => {
@@ -15,8 +14,6 @@ const createDbAndTable = async () => {
   await connection.query(`CREATE DATABASE IF NOT EXISTS \`${name_port}\`;`);
   await connection.query(`USE \`${name_port}\`;`);
   const script = fs.readFileSync('util/sql.txt', 'utf8');
-  console.log(script);
-  
   await connection.query(script);
   await connection.end();
 };
