@@ -9,5 +9,5 @@ const frontAppDir = path.join(dirname, name_front);
 const githubOwner = app.githubOwner;
 
 export {
-  getName as getPort, port, name, name_back, name_front, backAppDir, frontAppDir, githubOwner
+  port, name, name_back, name_front, backAppDir, frontAppDir, githubOwner
 };
