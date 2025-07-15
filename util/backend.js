@@ -17,6 +17,7 @@ const dockerBack = async () => {
 
   const script = `
     docker run -d \
+    --network wgk-net \
     --name ${name_port} \
     -p ${port}:8080 \
     -v ${name_port}:/app \
@@ -56,6 +57,7 @@ const backCode = async () => {
   replace(path.join(backAppDir, 'src/main/resources/application.yml'), 2, app.name);
   replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 1, app.host);
   replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 2, app.password);
+  replace(path.join(backAppDir, 'src/main/resources/application-prod.yml'), 1, name_port);
 
   await axios.post(`https://api.github.com/user/repos`, {
     name: name_port_back,
