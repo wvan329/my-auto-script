@@ -29,9 +29,9 @@ const dockerBack = async () => {
 
   // 检查执行结果是否包含错误
   if (result.stderr) {
-    console.error(`执行失败，<${name}>已存在`);
+    throw new Error(`执行失败，<${name}>已存在`);
   }
-  
+
   ssh.dispose();
 };
 
