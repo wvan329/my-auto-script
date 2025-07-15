@@ -8,8 +8,8 @@ import sealedbox from 'tweetnacl-sealedbox-js';
 
 import { app, dirname, replace } from './config.js';
 import {
-  name_port, name_port_front, frontAppDir, githubOwner
-} from './port.js';
+  name, name_front, frontAppDir, githubOwner
+} from './name.js';
 
 const dockerFront = async () => {
   const ssh = new NodeSSH();
@@ -20,8 +20,8 @@ const dockerFront = async () => {
   let content = result.stdout;
 
   const config = `
-    location /${name_port}-api/ {
-        proxy_pass http://${name_port}/;
+    location /${name}-api/ {
+        proxy_pass http://${name}:8080/;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "Upgrade";
@@ -31,10 +31,10 @@ const dockerFront = async () => {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location /${name_port} {
+    location /${name} {
         root /usr/share/nginx/html;
         index index.html;
-        try_files $uri $uri/ /${name_port}/index.html;
+        try_files $uri $uri/ /${name}/index.html;
     }
     # -替换1`;
 
@@ -65,15 +65,15 @@ const frontCode = async () => {
   fs.removeSync(zipPath);
   fs.removeSync(tempDir);
 
-  replace(path.join(frontAppDir, 'vite.config.js'), 1, name_port);
-  replace(path.join(frontAppDir, 'vite.config.js'), 2, `${name_port}-api`);
+  replace(path.join(frontAppDir, 'vite.config.js'), 1, name);
+  replace(path.join(frontAppDir, 'vite.config.js'), 2, `${name}-api`);
   replace(path.join(frontAppDir, 'vite.config.js'), 3, 'localhost');
-  replace(path.join(frontAppDir, 'src/router/index.js'), 1, name_port);
+  replace(path.join(frontAppDir, 'src/router/index.js'), 1, name);
   replace(path.join(frontAppDir, 'index.html'), 1, app.chinese || app.name);
-  replace(path.join(frontAppDir, '.github/workflows/maven.yml'), 1, name_port);
+  replace(path.join(frontAppDir, '.github/workflows/maven.yml'), 1, name);
 
   await axios.post(`https://api.github.com/user/repos`, {
-    name: name_port_front,
+    name: name_front,
     private: false,
     auto_init: false
   }, {
@@ -81,7 +81,7 @@ const frontCode = async () => {
   });
 
   const { data: publicKey } = await axios.get(
-    `https://api.github.com/repos/${githubOwner}/${name_port_front}/actions/secrets/public-key`,
+    `https://api.github.com/repos/${githubOwner}/${name_front}/actions/secrets/public-key`,
     { headers: { Authorization: `token ${app.githubToken}` } }
   );
 
@@ -91,7 +91,7 @@ const frontCode = async () => {
     ).toString('base64');
 
     await axios.put(
-      `https://api.github.com/repos/${githubOwner}/${name_port_front}/actions/secrets/${name}`,
+      `https://api.github.com/repos/${githubOwner}/${name_front}/actions/secrets/${name}`,
       { encrypted_value: encrypted, key_id: publicKey.key_id },
       { headers: { Authorization: `token ${app.githubToken}` } }
     );
@@ -102,7 +102,7 @@ const frontCode = async () => {
 
   const git = simpleGit(frontAppDir);
   await git.init();
-  await git.addRemote('origin', `https://github.com/${githubOwner}/${name_port_front}.git`);
+  await git.addRemote('origin', `https://github.com/${githubOwner}/${name_front}.git`);
   await git.add('./*');
   await git.commit('yes:初始化');
   await git.push('origin', 'main', { '--force': null });

@@ -8,8 +8,8 @@ import { NodeSSH } from 'node-ssh';
 
 import { app, dirname, replace } from './config.js';
 import {
-  name_port, name_port_back, port, backAppDir, githubOwner
-} from './port.js';
+  name, name_back, backAppDir, githubOwner
+} from './name.js';
 
 const dockerBack = async () => {
   const ssh = new NodeSSH();
@@ -18,13 +18,20 @@ const dockerBack = async () => {
   const script = `
     docker run -d \
     --network wgk-net \
-    --name ${name_port} \
-    -p ${port}:8080 \
-    -v ${name_port}:/app \
+    --name ${name} \
+    -v ${name}:/app \
     openjdk:17-jdk-slim \
-    java -jar /app/${name_port}.jar --spring.profiles.active=prod
+    java -jar /app/${name}.jar --spring.profiles.active=prod
   `;
-  await ssh.execCommand(script);
+
+  // 执行命令
+  const result = await ssh.execCommand(script);
+
+  // 检查执行结果是否包含错误
+  if (result.stderr) {
+    console.error(`执行失败，<${name}>已存在`);
+  }
+  
   ssh.dispose();
 };
 
@@ -49,18 +56,18 @@ const backCode = async () => {
   fs.removeSync(zipPath);
   fs.removeSync(tempDir);
 
-  replace(path.join(backAppDir, 'pom.xml'), 1, name_port_back);
-  replace(path.join(backAppDir, '.github/workflows/maven.yml'), 1, name_port_back);
-  replace(path.join(backAppDir, '.github/workflows/maven.yml'), 2, name_port);
+  replace(path.join(backAppDir, 'pom.xml'), 1, name_back);
+  replace(path.join(backAppDir, '.github/workflows/maven.yml'), 1, name_back);
+  replace(path.join(backAppDir, '.github/workflows/maven.yml'), 2, name);
   replace(path.join(backAppDir, '.gitignore'), 1, `/src/main/resources/application-dev.yml`);
-  replace(path.join(backAppDir, 'src/main/resources/application.yml'), 1, name_port);
+  replace(path.join(backAppDir, 'src/main/resources/application.yml'), 1, name);
   replace(path.join(backAppDir, 'src/main/resources/application.yml'), 2, app.name);
   replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 1, app.host);
   replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 2, app.password);
-  replace(path.join(backAppDir, 'src/main/resources/application-prod.yml'), 1, name_port);
+  replace(path.join(backAppDir, 'src/main/resources/application-prod.yml'), 1, name);
 
   await axios.post(`https://api.github.com/user/repos`, {
-    name: name_port_back,
+    name: name_back,
     private: false,
     auto_init: false
   }, {
@@ -69,7 +76,7 @@ const backCode = async () => {
 
 
   const { data: publicKey } = await axios.get(
-    `https://api.github.com/repos/${githubOwner}/${name_port_back}/actions/secrets/public-key`,
+    `https://api.github.com/repos/${githubOwner}/${name_back}/actions/secrets/public-key`,
     { headers: { Authorization: `token ${app.githubToken}` } }
   );
 
@@ -79,7 +86,7 @@ const backCode = async () => {
     ).toString('base64');
 
     await axios.put(
-      `https://api.github.com/repos/${githubOwner}/${name_port_back}/actions/secrets/${name}`,
+      `https://api.github.com/repos/${githubOwner}/${name_back}/actions/secrets/${name}`,
       { encrypted_value: encrypted, key_id: publicKey.key_id },
       { headers: { Authorization: `token ${app.githubToken}` } }
     );
@@ -91,7 +98,7 @@ const backCode = async () => {
 
   const git = simpleGit(backAppDir);
   await git.init();
-  await git.addRemote('origin', `https://github.com/${githubOwner}/${name_port_back}.git`);
+  await git.addRemote('origin', `https://github.com/${githubOwner}/${name_back}.git`);
   await git.add('./*');
   await git.commit('yes:初始化');
   await git.push('origin', 'main', { '--force': null });

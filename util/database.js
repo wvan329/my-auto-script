@@ -1,7 +1,7 @@
 import mysql from 'mysql2/promise';
 import fs from 'fs-extra';
 import { app } from './config.js';
-import { name_port } from './port.js';
+import { name_port } from './name.js';
 
 const createDbAndTable = async () => {
   const connection = await mysql.createConnection({

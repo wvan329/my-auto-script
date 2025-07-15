@@ -1,10 +1,6 @@
 #!/usr/bin/env node
 import util from './util/index.js';
 
-
-//获取端口
-await util.getPort();
-
 //初始化后端docker容器
 await util.dockerBack();
 
