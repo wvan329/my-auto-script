@@ -42,6 +42,7 @@ const dockerFront = async () => {
   const localFile = path.join(dirname, 'default.conf');
   fs.writeFileSync(localFile, content);
   await ssh.putFile(localFile, remoteFile);
+  await new Promise(resolve => setTimeout(resolve, 2000)); // 等待 2 秒钟
   await ssh.execCommand('docker exec nginx nginx -s reload');
   fs.unlinkSync(localFile);
   ssh.dispose();
