@@ -21,7 +21,7 @@ const dockerFront = async () => {
 
   const config = `
     location /${name_port}-api/ {
-        proxy_pass ${name_port};
+        proxy_pass http://${name_port};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "Upgrade";
