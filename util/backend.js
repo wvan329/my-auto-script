@@ -61,10 +61,11 @@ const backCode = async () => {
   replace(path.join(backAppDir, '.github/workflows/maven.yml'), 2, name);
   replace(path.join(backAppDir, '.gitignore'), 1, `/src/main/resources/application-dev.yml`);
   replace(path.join(backAppDir, 'src/main/resources/application.yml'), 1, name);
-  replace(path.join(backAppDir, 'src/main/resources/application.yml'), 2, app.name);
+  replace(path.join(backAppDir, 'src/main/resources/application.yml'), 2, name);
   replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 1, app.host);
   replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 2, app.password);
-  replace(path.join(backAppDir, 'src/main/resources/application-prod.yml'), 1, name);
+  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 3, app.host);
+  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 4, app.password);
 
   await axios.post(`https://api.github.com/user/repos`, {
     name: name_back,
