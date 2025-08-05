@@ -44,6 +44,10 @@ const dockerFront = async () => {
   await ssh.putFile(localFile, remoteFile);
   await new Promise(resolve => setTimeout(resolve, 2000)); // 等待 2 秒钟
   await ssh.execCommand('docker exec nginx nginx -s reload');
+  await new Promise(resolve => setTimeout(resolve, 2000)); // 等待 2 秒钟
+  await ssh.execCommand('docker exec nginx nginx -s reload');
+  await new Promise(resolve => setTimeout(resolve, 2000)); // 等待 2 秒钟
+  await ssh.execCommand('docker exec nginx nginx -s reload');
   fs.unlinkSync(localFile);
   ssh.dispose();
 };
