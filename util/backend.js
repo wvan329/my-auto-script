@@ -66,6 +66,7 @@ const backCode = async () => {
   replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 2, app.password);
   replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 3, app.host);
   replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 4, app.password);
+  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 5, app.deepseekApi);
 
   await axios.post(`https://api.github.com/user/repos`, {
     name: name_back,
@@ -95,6 +96,7 @@ const backCode = async () => {
 
   await setGithubSecret('SERVER_HOST', app.host);
   await setGithubSecret('PASSWORD', app.password);
+  await setGithubSecret('deepseekApi', app.deepseekApi);
   await setGithubSecret('SERVER_SSH_KEY', fs.readFileSync(path.join(dirname, 'config/id_rsa'), 'utf8'));
 
   const git = simpleGit(backAppDir);
