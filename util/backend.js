@@ -97,6 +97,7 @@ const backCode = async () => {
   await setGithubSecret('SERVER_HOST', app.host);
   await setGithubSecret('PASSWORD', app.password);
   await setGithubSecret('deepseekApi', app.deepseekApi);
+  await setGithubSecret('aliApi', app.aliApi);
   await setGithubSecret('SERVER_SSH_KEY', fs.readFileSync(path.join(dirname, 'config/id_rsa'), 'utf8'));
 
   const git = simpleGit(backAppDir);
