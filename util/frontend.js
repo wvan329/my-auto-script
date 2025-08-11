@@ -23,6 +23,10 @@ const dockerFront = async () => {
     location /${name}-api/ {
         proxy_pass http://${name}:8080/;
         proxy_http_version 1.1;
+        proxy_connect_timeout 300;       # 与后端建立连接的超时时间（秒）
+        proxy_send_timeout 300;          # 发送请求给后端的超时时间
+        proxy_read_timeout 300;          # 等待后端响应的超时时间
+        send_timeout 300;                # 向客户端发送响应的超时时间
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "Upgrade";
         proxy_set_header Host $host;
