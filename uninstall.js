@@ -62,5 +62,4 @@ export const uninstall = async () => {
   });
 
   console.log("清理完成");
-
 }
