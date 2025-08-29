@@ -10,8 +10,11 @@ util.createDbAndTable();
 //拉后端代码、建立GitHub仓库、修改项目配置、推送代码、CICD
 util.backCode();
 
-//配置nginx路由
-util.dockerFront();
-
 //拉前端代码、建立GitHub仓库、修改项目配置、推送代码、CICD
 util.frontCode();
+
+//配置nginx路由
+//必须后端容器启动后nginx配置才能刷新成功，因为有反向代理
+util.dockerFront();
+
+console.log("完成");

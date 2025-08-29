@@ -46,12 +46,17 @@ const dockerFront = async () => {
   const localFile = path.join(dirname, 'default.conf');
   fs.writeFileSync(localFile, content);
   await ssh.putFile(localFile, remoteFile);
-  await new Promise(resolve => setTimeout(resolve, 2000)); // 等待 2 秒钟
-  await ssh.execCommand('docker exec nginx nginx -s reload');
-  await new Promise(resolve => setTimeout(resolve, 2000)); // 等待 2 秒钟
-  await ssh.execCommand('docker exec nginx nginx -s reload');
-  await new Promise(resolve => setTimeout(resolve, 2000)); // 等待 2 秒钟
-  await ssh.execCommand('docker exec nginx nginx -s reload');
+
+  //后端容器启动成功才能刷新成功
+  while (true) {
+    const result = await ssh.execCommand('docker exec nginx nginx -s reload');
+    if (result.stderr) {
+      console.log("等待后端容器启动...");
+      await new Promise(resolve => setTimeout(resolve, 3000)); // 等待 3 秒钟
+    } else {
+      break;
+    }
+  }
   fs.unlinkSync(localFile);
   ssh.dispose();
 };
