@@ -4,7 +4,8 @@
   "main": "index.js",
   "type": "module",
   "bin": {
-    "my-auto-install": "./install.js"
+    "my-auto-install": "./install.js",
+    "my-auto-uninstall": "./uninstall.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
