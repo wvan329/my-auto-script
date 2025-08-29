@@ -7,7 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 
 if (args[0] === "install") {
-  console.log(install);
+  console.log("install");
 } else if (args[0] === "uninstall") {
-  console.log(install);
+  console.log("i1nstall");
 }
