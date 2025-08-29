@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import util from './util/index.js';
+import util from './install/index.js';
 
 //初始化后端docker容器
 await util.dockerBack();
