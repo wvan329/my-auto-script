@@ -6,7 +6,7 @@ import AdmZip from 'adm-zip';
 import simpleGit from 'simple-git';
 import sealedbox from 'tweetnacl-sealedbox-js';
 
-import { app, dirname, replace } from './config.js';
+import { app, dirname, replace, nginxConfig } from './config.js';
 import {
   name, name_front, frontAppDir, githubOwner
 } from './name.js';
@@ -19,30 +19,9 @@ const dockerFront = async () => {
   const result = await ssh.execCommand(`cat ${remoteFile}`);
   let content = result.stdout;
 
-  const config = `
-    location /${name}-api/ {
-        proxy_pass http://${name}:8080/;
-        proxy_http_version 1.1;
-        proxy_connect_timeout 300;       # 与后端建立连接的超时时间（秒）
-        proxy_send_timeout 300;          # 发送请求给后端的超时时间
-        proxy_read_timeout 300;          # 等待后端响应的超时时间
-        send_timeout 300;                # 向客户端发送响应的超时时间
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
 
-    location /${name} {
-        root /usr/share/nginx/html;
-        index index.html;
-        try_files $uri $uri/ /${name}/index.html;
-    }
-    # -替换1`;
 
-  content = content.replace('# -替换1', config);
+  content = content.replace('# -替换1', nginxConfig);
   const localFile = path.join(dirname, 'default.conf');
   fs.writeFileSync(localFile, content);
   await ssh.putFile(localFile, remoteFile);
@@ -51,7 +30,7 @@ const dockerFront = async () => {
   while (true) {
     const result = await ssh.execCommand('docker exec nginx nginx -s reload');
     console.log(result);
-    
+
     if (result.code !== 0) {
       console.log("等待后端容器启动...");
       await new Promise(resolve => setTimeout(resolve, 3000)); // 等待 3 秒钟

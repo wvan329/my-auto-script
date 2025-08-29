@@ -1,0 +1,52 @@
+create table if not exists permissions
+(
+    id          bigint auto_increment
+        primary key,
+    permission  varchar(255) null,
+    description text         null,
+    constraint permission_code
+        unique (permission)
+);
+
+create table if not exists role_permission
+(
+    role_id       bigint not null,
+    permission_id bigint not null,
+    primary key (role_id, permission_id)
+);
+
+create table if not exists roles
+(
+    id          bigint auto_increment
+        primary key,
+    role        varchar(255) null,
+    description text         null,
+    constraint role_code
+        unique (role)
+);
+
+create table if not exists user_role
+(
+    user_id bigint not null,
+    role_id bigint not null,
+    primary key (user_id, role_id)
+);
+
+create table if not exists users
+(
+    id       bigint auto_increment
+        primary key,
+    username varchar(255) null comment '用户名',
+    password varchar(255) null comment '密码',
+    birthday datetime     null,
+    constraint username
+        unique (username)
+);
+
+INSERT INTO roles (id, role, description) VALUES (1, 'user', '用户');
+INSERT INTO roles (id, role, description) VALUES (2, 'admin', '管理员');
+
+INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
+
+#密码123456
+INSERT INTO users (id, username, password, birthday) VALUES (1, 'wgk123', '$2a$10$6AUDy7zPBk46dLub7eSSYeAK5wGzPQ1boavhcbt7EwvTKUDFvbxJe', '2003-03-12 22:10:21');
