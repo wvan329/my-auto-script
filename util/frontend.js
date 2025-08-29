@@ -50,7 +50,9 @@ const dockerFront = async () => {
   //后端容器启动成功才能刷新成功
   while (true) {
     const result = await ssh.execCommand('docker exec nginx nginx -s reload');
-    if (result.stderr) {
+    console.log(result);
+    
+    if (result.code !== 0) {
       console.log("等待后端容器启动...");
       await new Promise(resolve => setTimeout(resolve, 3000)); // 等待 3 秒钟
     } else {
