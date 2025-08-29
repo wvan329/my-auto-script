@@ -3,6 +3,7 @@ import fs from 'fs-extra';
 import { app } from './config.js';
 import { name } from './name.js';
 import { fileURLToPath } from 'url';
+import path from 'path';
 
 //当前文件url
 const __filename = fileURLToPath(import.meta.url);
