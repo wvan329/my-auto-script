@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import mysql from 'mysql2/promise';
 import axios from 'axios';
 import fs from 'fs-extra';
