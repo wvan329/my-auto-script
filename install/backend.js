@@ -22,7 +22,7 @@ const dockerBack = async () => {
     -w /app \
     -v ${name}:/app \
     openjdk:17-jdk-slim \
-    java -jar ${name}.jar --spring.profiles.active=prod
+    java -Djava.awt.headless=true -jar ${name}.jar --spring.profiles.active=prod
   `;
 
   // 执行命令
