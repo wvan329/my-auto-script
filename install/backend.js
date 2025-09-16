@@ -19,9 +19,10 @@ const dockerBack = async () => {
     docker run -d \
     --network wgk-net \
     --name ${name} \
+    -w /app \
     -v ${name}:/app \
     openjdk:17-jdk-slim \
-    java -jar /app/${name}.jar --spring.profiles.active=prod
+    java -jar ${name}.jar --spring.profiles.active=prod
   `;
 
   // 执行命令
