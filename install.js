@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import util from "./install/index.js";
 import { name } from "./install/name.js";
+import { exec } from "child_process";
 
 export const install = async () => {
   //初始化后端docker容器
@@ -21,5 +22,15 @@ export const install = async () => {
 
   console.log("完成");
 
-  window.open(`https://a.wgk-fun.top/${name}/`);
+  function openPage(url) {
+    if (process.platform === "darwin") {
+      exec(`open ${url}`);
+    } else if (process.platform === "win32") {
+      exec(`start ${url}`);
+    } else {
+      exec(`xdg-open ${url}`);
+    }
+  }
+
+  openPage("https://www.baidu.com");
 };
