@@ -61,8 +61,8 @@ const frontCode = async () => {
 
   replace(path.join(frontAppDir, 'vite.config.js'), 1, name);
   replace(path.join(frontAppDir, 'vite.config.js'), 2, `${name}-api`);
-  replace(path.join(frontAppDir, 'src/router/index.js'), 1, name);
-  replace(path.join(frontAppDir, 'index.html'), 1, app.chinese || app.name);
+  replace(path.join(frontAppDir, '.env'), 1, app.chinese || app.name);
+  replace(path.join(frontAppDir, '.env'), 2, name);
   replace(path.join(frontAppDir, '.github/workflows/maven.yml'), 1, name);
 
   await axios.post(`https://api.github.com/user/repos`, {
