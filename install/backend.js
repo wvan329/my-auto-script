@@ -21,7 +21,7 @@ const dockerBack = async () => {
     --name ${name} \
     -w /app \
     -v ${name}:/app \
-    openjdk:17-jdk-slim \
+    openjdk:17-jdk \
     java -jar ${name}.jar --spring.profiles.active=prod
   `;
 
