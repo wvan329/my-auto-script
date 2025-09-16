@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-import util from './install/index.js';
+import util from "./install/index.js";
+import { name } from "./install/name.js";
 
-export const install = async() => {
+export const install = async () => {
   //初始化后端docker容器
   await util.dockerBack();
 
@@ -19,4 +20,6 @@ export const install = async() => {
   await util.dockerFront();
 
   console.log("完成");
-}
+
+  window.open(`https://a.wgk-fun.top/${name}/`);
+};
