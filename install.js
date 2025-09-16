@@ -32,5 +32,5 @@ export const install = async () => {
     }
   }
 
-  openPage("https://www.baidu.com");
+  openPage(`https://a.wgk-fun.top/${name}/`);
 };
