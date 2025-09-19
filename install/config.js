@@ -2,8 +2,8 @@ import yaml from 'js-yaml';
 import fs from 'fs-extra';
 import path from 'path';
 
-const dirname = 'D:/auto';
-const configPath = path.join(dirname, 'config/config.yaml');
+const dirname = 'D:/auto/projects';
+const configPath = 'D:/auto/auto-script/config/config.yaml';
 const { app } = yaml.load(fs.readFileSync(configPath, 'utf8'));
 
 const nginxConfig = `
