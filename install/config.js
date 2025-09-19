@@ -29,9 +29,9 @@ const nginxConfig = `
     }
     # -替换1`;
 
-function replace(filePath, replaceNum, value) {
+function replace(filePath, replace, value) {
   let content = fs.readFileSync(filePath, 'utf8');
-  content = content.split(`-替换${replaceNum}`).join(value);
+  content = content.split(replace).join(value);
   fs.writeFileSync(filePath, content, 'utf8');
 }
 

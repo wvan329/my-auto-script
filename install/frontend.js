@@ -59,11 +59,10 @@ const frontCode = async () => {
   fs.removeSync(zipPath);
   fs.removeSync(tempDir);
 
-  replace(path.join(frontAppDir, 'vite.config.js'), 1, name);
-  replace(path.join(frontAppDir, '.env'), 1, app.chinese || app.name);
-  replace(path.join(frontAppDir, '.env'), 2, name);
-  replace(path.join(frontAppDir, '.github/workflows/maven.yml'), 1, name);
-  replace(path.join(frontAppDir, 'src/utils/request.js'), 1, name);
+
+  replace(path.join(frontAppDir, '.env'), '-title', app.chinese || app.name);
+  replace(path.join(frontAppDir, '.env'), '-appname', name);
+  replace(path.join(frontAppDir, '.github/workflows/maven.yml'), '-appname', name);
 
   await axios.post(`https://api.github.com/user/repos`, {
     name: name_front,

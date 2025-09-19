@@ -57,18 +57,18 @@ const backCode = async () => {
   fs.removeSync(zipPath);
   fs.removeSync(tempDir);
 
-  replace(path.join(backAppDir, 'pom.xml'), 1, name_back);
-  replace(path.join(backAppDir, '.github/workflows/maven.yml'), 1, name_back);
-  replace(path.join(backAppDir, '.github/workflows/maven.yml'), 2, name);
-  replace(path.join(backAppDir, '.gitignore'), 1, `/src/main/resources/application-dev.yml`);
-  replace(path.join(backAppDir, 'src/main/resources/config/sa-token.yml'), 1, name);
-  replace(path.join(backAppDir, 'src/main/resources/config/data.yml'), 1, name);
-  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 1, app.host);
-  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 2, app.password);
-  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 3, app.host);
-  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 4, app.password);
-  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 5, app.deepseekApi);
-  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), 6, app.aliApi);
+  replace(path.join(backAppDir, 'pom.xml'), '-替换1', name_back);
+  replace(path.join(backAppDir, '.github/workflows/maven.yml'), '-替换1', name_back);
+  replace(path.join(backAppDir, '.github/workflows/maven.yml'), '-替换2', name);
+  replace(path.join(backAppDir, '.gitignore'), '-替换1', `/src/main/resources/application-dev.yml`);
+  replace(path.join(backAppDir, 'src/main/resources/config/sa-token.yml'), '-替换1', name);
+  replace(path.join(backAppDir, 'src/main/resources/config/data.yml'), '-替换1', name);
+  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), '-替换1', app.host);
+  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), '-替换2', app.password);
+  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), '-替换3', app.host);
+  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), '-替换4', app.password);
+  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), '-替换5', app.deepseekApi);
+  replace(path.join(backAppDir, 'src/main/resources/application-dev.yml'), '-替换6', app.aliApi);
 
   await axios.post(`https://api.github.com/user/repos`, {
     name: name_back,
