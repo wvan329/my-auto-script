@@ -48,10 +48,8 @@ export const uninstall = async () => {
   ssh.dispose();
 
   //删除本地文件
-  let folderPath = path.join('D:', 'auto', name_back);
-  await fs.rm(folderPath, { recursive: true, force: true });
-  folderPath = path.join('D:', 'auto', name_front);
-  await fs.rm(folderPath, { recursive: true, force: true });
+  await fs.rm(backAppDir, { recursive: true, force: true });
+  await fs.rm(frontAppDir, { recursive: true, force: true });
 
   //删除github
   await axios.delete(`https://api.github.com/repos/${githubOwner}/${name_back}`, {
