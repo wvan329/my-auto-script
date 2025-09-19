@@ -90,7 +90,7 @@ const frontCode = async () => {
   };
 
   await setGithubSecret('SERVER_HOST', app.host);
-  await setGithubSecret('SERVER_SSH_KEY', fs.readFileSync(path.join(dirname, 'config/id_rsa'), 'utf8'));
+  await setGithubSecret('SERVER_SSH_KEY', fs.readFileSync('D:/auto/auto-script/config/id_rsa', 'utf8'));
 
   const git = simpleGit(frontAppDir);
   await git.init();
