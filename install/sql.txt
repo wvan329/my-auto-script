@@ -35,4 +35,5 @@ INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO user_role (user_id, role_id) VALUES (2, 2);
 
 #密码123456
-INSERT INTO users (id, username, password, birthday) VALUES (1, 'wgk123', '$2a$10$6AUDy7zPBk46dLub7eSSYeAK5wGzPQ1boavhcbt7EwvTKUDFvbxJe', '2003-03-12 22:10:21');
+INSERT INTO users (id, username, password, birthday) VALUES (1, 'user', '$2a$10$6AUDy7zPBk46dLub7eSSYeAK5wGzPQ1boavhcbt7EwvTKUDFvbxJe', '2003-03-12 22:10:21');
+INSERT INTO users (id, username, password, birthday) VALUES (2, 'admin', '$2a$10$6AUDy7zPBk46dLub7eSSYeAK5wGzPQ1boavhcbt7EwvTKUDFvbxJe', '2003-03-12 22:10:21');
